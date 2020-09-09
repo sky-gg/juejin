@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>choose</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        .content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        .content {
+            display: flex;
+            position: relative;
+        }
+
+        .btn {
+            width: 4rem;
+            height: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 15%;
+            background-color: #2ad181;
+
+            position: absolute;
+            left: 50%;
+            top: 1rem;
+            transform: translateX(-50%);
+
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .left {
+            background-color: blue;
+            color: red;
+        }
+
+        .right {
+            color: blue;
+            background-color: red;
+        }
+
+        .left,
+        .right {
+            flex: 1;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+        }
+
+        .white {
+            background-color: rgba(255, 255, 255, .3);
+        }
+    </style>
+    <script>
+        // 基准大小
+        const baseSize = 32
+        // 设置 rem 函数
+        function setRem() {
+            // 当前页面宽度相对于 750 宽的缩放比例，可根据自己需要修改。
+            const scale = document.documentElement.clientWidth / 750
+            // 设置页面根节点字体大小
+            document.documentElement.style.fontSize = (baseSize * Math.min(scale, 2)) + 'px'
+        }
+        // 初始化
+        setRem()
+        // 改变窗口大小时重新设置 rem
+        window.onresize = function () {
+            setRem()
+        }
+    </script>
+</head>
+
+<body>
+    <div class="content">
+        <div class="btn" role="button">选择</div>
+        <div class="left">学习</div>
+        <div class="right">游戏</div>
+    </div>
+    <script>
+        let btn = document.getElementsByClassName('btn')[0]
+        let left = document.getElementsByClassName('left')[0].classList
+        let right = document.getElementsByClassName('right')[0].classList
+        btn.onclick = function () {
+            if (this.timer) clearInterval(this.timer)
+            this.timer = setInterval(() => {
+                if (left.contains('white')) {
+                    left.remove('white')
+                    right.add('white')
+                } else {
+                    right.remove('white')
+                    left.add('white')
+                }
+            }, 100)
+            setTimeout(() => {
+                clearInterval(this.timer)
+            }, randomTime())
+        }
+        function randomTime() {
+            return Math.ceil(Math.random() * 10000)
+        }
+
+    </script>
+</body>
+
+</html>
